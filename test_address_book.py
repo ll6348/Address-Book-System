@@ -1,5 +1,5 @@
 import pytest
-from address_book_system import AddressBook, Contact
+from address_book_system import AddressBook, Contact, AddressBookSystem
 
 @pytest.mark.usecase1
 def test_create_contact():
@@ -67,3 +67,18 @@ def test_add_multiple_contacts():
     assert len(ab.contacts) == 2
     assert ab.contacts[0].first_name == "A"
     assert ab.contacts[1].last_name == "Two"
+
+@pytest.mark.usecase6
+def test_multiple_address_books():
+    system = AddressBookSystem()
+    system.add_address_book("Family")
+    system.add_address_book("Work")
+
+    family = system.get_address_book("Family")
+    work = system.get_address_book("Work")
+
+    family.add_contact(Contact("Mom", "Smith", "Home St", "City", "State", "111111", "+91 9999999999", "mom@home.com"))
+    work.add_contact(Contact("Boss", "Lee", "Office St", "BizCity", "BizState", "222222", "+91 8888888888", "boss@office.com"))
+
+    assert len(family.contacts) == 1
+    assert len(work.contacts) == 1
