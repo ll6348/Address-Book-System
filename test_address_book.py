@@ -210,3 +210,20 @@ def test_export_to_text(tmp_path):
     assert "Maya Iyer" in content
     assert "222 Road" in content
     assert "Phone" in content
+
+@pytest.mark.usecase14
+def test_csv_export_and_import(tmp_path):
+    book = AddressBook()
+    contact = Contact("Arya", "Sharma", "101 Block", "Bangalore", "KA", "560001", "+91 9111222233", "arya@mail.com")
+    book.add_contact(contact)
+
+    csv_file = tmp_path / "contacts.csv"
+    book.export_to_csv(csv_file)
+
+    # Load into another address book
+    new_book = AddressBook()
+    new_book.import_from_csv(csv_file)
+
+    assert len(new_book.contacts) == 1
+    assert new_book.contacts[0].first_name == "Arya"
+    assert new_book.contacts[0].email == "arya@mail.com"

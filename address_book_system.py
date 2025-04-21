@@ -1,6 +1,7 @@
 import re
 from functools import wraps
 from collections import defaultdict
+import csv
 
 def regex_validator(pattern):
     def decorator(func):
@@ -139,6 +140,26 @@ class AddressBook:
                 file.write(str(contact))
                 file.write("\n" + "-" * 40 + "\n")
         print(f"Address book exported to plain text file: {filename}")
+    
+    def export_to_csv(self, filename):
+        with open(filename, mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["first_name", "last_name", "address", "city", "state", "zip_code", "phone_number", "email"])
+            for c in self.contacts:
+                writer.writerow([c.first_name, c.last_name, c.address, c.city, c.state, c.zip_code, c.phone_number, c.email])
+        print(f"Address book exported to {filename} successfully.")
+
+    def import_from_csv(self, filename):
+        try:
+            with open(filename, mode='r') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    contact = Contact(**row)
+                    if contact not in self.contacts:
+                        self.contacts.append(contact)
+            print(f"Address book imported from {filename} successfully.")
+        except FileNotFoundError:
+            print(f"File '{filename}' not found.")
 
 class AddressBookSystem:
     def __init__(self):
