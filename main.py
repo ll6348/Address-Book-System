@@ -148,8 +148,12 @@ if __name__ == "__main__":
                     print("\nContacts Sorted by Zip Code:")
                     for c in sorted_contacts:
                         print("\n" + str(c))
-                        
+
                 elif sub_choice == "9":
+                    filename = input("Enter text filename to export (e.g., book.txt): ").strip()
+                    book.export_to_txt(filename)
+                        
+                elif sub_choice == "10":
                     break
 
                 else:
