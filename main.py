@@ -1,19 +1,64 @@
+"""
+main.py
+
+This is the entry point for the Address Book System.
+It provides a command-line interface for managing multiple address books,
+adding and editing contacts, and handling file operations.
+
+Functions:
+- get_contact_from_console(): Prompt user to input a contact's details.
+- get_fields_to_update(): Prompt user for fields they wish to update.
+- select_address_book(): Let the user select or create an address book.
+"""
+
 from address_book_system import AddressBookSystem, AddressBookMain, Contact
+from pydantic import ValidationError
 
 def get_contact_from_console():
-    print("\nEnter contact details:")
-    first_name = input("First Name: ").strip()
-    last_name = input("Last Name: ").strip()
-    address = input("Address: ").strip()
-    city = input("City: ").strip()
-    state = input("State: ").strip()
-    zip_code = input("ZIP Code: ").strip()
-    phone_number = input("Phone Number (+91 1234567890): ").strip()
-    email = input("Email: ").strip()
+    """
+    Prompts the user to enter all details of a contact.
 
-    return Contact(first_name, last_name, address, city, state, zip_code, phone_number, email)
+    Returns:
+        Contact: A Contact object created from user input.
+    """
+    while True:
+        try:
+            print("\nEnter contact details:")
+            first_name = input("First Name: ").strip()
+            last_name = input("Last Name: ").strip()
+            address = input("Address: ").strip()
+            city = input("City: ").strip()
+            state = input("State: ").strip()
+            zip_code = input("ZIP Code: ").strip()
+            phone_number = input("Phone Number (+91 1234567890): ").strip()
+            email = input("Email: ").strip()
+
+            return Contact(
+                first_name=first_name,
+                last_name=last_name,
+                address=address,
+                city=city,
+                state=state,
+                zip_code=zip_code,
+                phone_number=phone_number,
+                email=email
+            )
+        except ValidationError as ve:
+            print("\nValidation Error:")
+            for error in ve.errors():
+                field = error["loc"][0]
+                msg = error["msg"]
+                print(f"- {field}: {msg}")
+            print("Please try again.\n")
 
 def get_fields_to_update():
+    """
+    Prompts the user to specify which contact fields to update,
+    and collects new values for those fields.
+
+    Returns:
+        dict: A dictionary mapping field names to their new values.
+    """
     fields = input("Enter field names to update (comma-separated): ").strip().lower().replace(" ", "").split(",")
     updates = {}
     for field in fields:
@@ -22,6 +67,15 @@ def get_fields_to_update():
     return updates
 
 def select_address_book(system):
+    """
+    Lets the user choose an existing address book or create a new one.
+
+    Args:
+        system (AddressBookSystem): The main address book management system.
+
+    Returns:
+        AddressBook or None: The selected or newly created address book, or None if cancelled.
+    """
     name = input("Enter the name of the address book to use: ").strip()
     book = system.get_address_book(name)
     if not book:
@@ -36,6 +90,9 @@ def select_address_book(system):
     return book
 
 if __name__ == "__main__":
+    """
+    Initializes the address book system and displays the main menu.
+    """
     AddressBookMain()
     system = AddressBookSystem()
 
@@ -78,7 +135,8 @@ if __name__ == "__main__":
                 print("7. Sort Contacts by State")
                 print("8. Sort Contacts by Zip Code")
                 print("9. Export Address Book to Text File")
-                print("10. Export Address Book to CSV")
+                print("10. Import Address Book from Text File")
+                print("11. Export Address Book to CSV")
                 print("12. Import Address Book from CSV")
                 print("13. Export Address Book to JSON")
                 print("14. Import Address Book from JSON")
@@ -157,24 +215,28 @@ if __name__ == "__main__":
                 elif sub_choice == "9":
                     filename = input("Enter text filename to export (e.g., book.txt): ").strip()
                     book.export_to_txt(filename)
-
+                
                 elif sub_choice == "10":
+                    filename = input("Enter text filename to import from (e.g., book.txt): ").strip()
+                    book.import_from_txt(filename)
+
+                elif sub_choice == "11":
                     filename = input("Enter CSV filename to export (e.g., book.csv): ").strip()
                     book.export_to_csv(filename)
 
-                elif sub_choice == "11":
+                elif sub_choice == "12":
                     filename = input("Enter CSV filename to import: ").strip()
                     book.import_from_csv(filename)
 
-                elif sub_choice == "12":
+                elif sub_choice == "13":
                     filename = input("Enter JSON filename to export (e.g., book.json): ").strip()
                     book.export_to_json(filename)
 
-                elif sub_choice == "13":
+                elif sub_choice == "14":
                     filename = input("Enter JSON filename to import: ").strip()
                     book.import_from_json(filename)
                  
-                elif sub_choice == "14":
+                elif sub_choice == "15":
                     break
 
                 else:
