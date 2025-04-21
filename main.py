@@ -79,8 +79,10 @@ if __name__ == "__main__":
                 print("8. Sort Contacts by Zip Code")
                 print("9. Export Address Book to Text File")
                 print("10. Export Address Book to CSV")
-                print("11. Import Address Book from CSV")
-                print("12. Back to Main Menu")
+                print("12. Import Address Book from CSV")
+                print("13. Export Address Book to JSON")
+                print("14. Import Address Book from JSON")
+                print("15. Back to Main Menu")
                 sub_choice = input("Choose an option: ").strip()
 
                 if sub_choice == "1":
@@ -163,8 +165,16 @@ if __name__ == "__main__":
                 elif sub_choice == "11":
                     filename = input("Enter CSV filename to import: ").strip()
                     book.import_from_csv(filename)
-                    
+
                 elif sub_choice == "12":
+                    filename = input("Enter JSON filename to export (e.g., book.json): ").strip()
+                    book.export_to_json(filename)
+
+                elif sub_choice == "13":
+                    filename = input("Enter JSON filename to import: ").strip()
+                    book.import_from_json(filename)
+                 
+                elif sub_choice == "14":
                     break
 
                 else:

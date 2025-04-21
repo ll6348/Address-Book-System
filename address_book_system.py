@@ -2,6 +2,7 @@ import re
 from functools import wraps
 from collections import defaultdict
 import csv
+import json
 
 def regex_validator(pattern):
     def decorator(func):
@@ -155,6 +156,23 @@ class AddressBook:
                 reader = csv.DictReader(file)
                 for row in reader:
                     contact = Contact(**row)
+                    if contact not in self.contacts:
+                        self.contacts.append(contact)
+            print(f"Address book imported from {filename} successfully.")
+        except FileNotFoundError:
+            print(f"File '{filename}' not found.")
+
+    def export_to_json(self, filename):
+        with open(filename, 'w') as file:
+            json.dump([contact.__dict__ for contact in self.contacts], file, indent=4)
+        print(f"Address book exported to {filename} successfully.")
+
+    def import_from_json(self, filename):
+        try:
+            with open(filename, 'r') as file:
+                data = json.load(file)
+                for entry in data:
+                    contact = Contact(**entry)
                     if contact not in self.contacts:
                         self.contacts.append(contact)
             print(f"Address book imported from {filename} successfully.")
