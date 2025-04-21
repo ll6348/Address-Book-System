@@ -74,12 +74,16 @@ if __name__ == "__main__":
                 if sub_choice == "1":
                     while True:
                         contact = get_contact_from_console()
-                        book.add_contact(contact)
-                        print("Contact added.")
+                        success = book.add_contact(contact)
+                        if success:
+                            print("Contact added.")
+                        else:
+                            print("Duplicate contact. Skipped.")
 
                         cont = input("Add another contact? (y/n): ").strip().lower()
                         if cont != 'y':
                             break
+
 
                 elif sub_choice == "2":
                     first = input("Enter First Name: ").strip()

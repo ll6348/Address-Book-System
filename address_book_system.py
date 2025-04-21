@@ -23,6 +23,15 @@ class Contact:
         self.phone_number = phone_number
         self.email = email
 
+    def __eq__(self, other):
+        if isinstance(other, Contact):
+            return (self.first_name.lower() == other.first_name.lower() and
+                    self.last_name.lower() == other.last_name.lower())
+        return False
+
+    def __hash__(self):
+        return hash((self.first_name.lower(), self.last_name.lower()))
+
     def __str__(self):
         return (f"Name       : {self.first_name} {self.last_name}\n"
                 f"Address    : {self.address}, {self.city}, {self.state} - {self.zip_code}\n"
@@ -68,7 +77,12 @@ class AddressBook:
         self.validate_phone(contact.phone_number)
         self.validate_email(contact.email)
 
+        if contact in self.contacts:
+            print("Duplicate contact! Cannot add.")
+            return False
+
         self.contacts.append(contact)
+        return True
 
     def list_contacts(self):
         return [str(c) for c in self.contacts]
