@@ -1,4 +1,5 @@
 # main.py
+
 import re
 from functools import wraps
 from address_book_system import Contact
@@ -12,7 +13,6 @@ def regex_validator(pattern):
             return func(self, value)
         return wrapper
     return decorator
-
 
 def get_contact_from_console():
     print("Enter contact details:")
