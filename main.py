@@ -46,7 +46,9 @@ if __name__ == "__main__":
         print("3. List All Address Books")
         print("4. Search by City")
         print("5. Search by State")
-        print("6. Exit")
+        print("6. View All Persons Grouped by City")
+        print("7. View All Persons Grouped by State")
+        print("8. Exit")
 
         main_choice = input("Choose an option: ").strip()
 
@@ -152,8 +154,29 @@ if __name__ == "__main__":
                 print("No contacts found in this state.")
 
         elif main_choice == "6":
+            grouped = system.view_all_grouped_by_city()
+            if not grouped:
+                print("No contacts found.")
+            else:
+                for city, entries in grouped.items():
+                    print(f"\nCity: {city}")
+                    for book_name, contact in entries:
+                        print(f"[Book: {book_name}] {contact}")
+
+        elif main_choice == "7":
+            grouped = system.view_all_grouped_by_state()
+            if not grouped:
+                print("No contacts found.")
+            else:
+                for state, entries in grouped.items():
+                    print(f"\nState: {state}")
+                    for book_name, contact in entries:
+                        print(f"[Book: {book_name}] {contact}")
+
+        elif main_choice == "8":
             print("Exiting Address Book Program.")
             break
+
 
         else:
             print("Invalid option. Try again.")

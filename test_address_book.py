@@ -115,3 +115,30 @@ def test_search_by_city_and_state():
     assert len(state_results) == 1
     assert city_results[0][0] == "Friends"
     assert state_results[0][0] == "Work"
+
+@pytest.mark.usecase9
+def test_grouped_view_by_city_and_state():
+    system = AddressBookSystem()
+    system.add_address_book("Work")
+    system.add_address_book("Family")
+
+    work = system.get_address_book("Work")
+    family = system.get_address_book("Family")
+
+    c1 = Contact("Sam", "Roy", "123", "Delhi", "Delhi", "110001", "+91 9123456780", "sam@delhi.com")
+    c2 = Contact("Lena", "Roy", "456", "Delhi", "UP", "110002", "+91 9123456781", "lena@delhi.com")
+    c3 = Contact("Nina", "Patel", "789", "Mumbai", "MH", "400001", "+91 9123456782", "nina@mumbai.com")
+
+    work.add_contact(c1)
+    work.add_contact(c2)
+    family.add_contact(c3)
+
+    city_groups = system.view_all_grouped_by_city()
+    state_groups = system.view_all_grouped_by_state()
+
+    assert "Delhi" in city_groups
+    assert "MH" in state_groups
+    assert len(city_groups["Delhi"]) == 2
+    assert len(state_groups["Delhi"]) == 1
+    assert len(state_groups["UP"]) == 1
+
