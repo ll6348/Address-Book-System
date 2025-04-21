@@ -227,3 +227,20 @@ def test_csv_export_and_import(tmp_path):
     assert len(new_book.contacts) == 1
     assert new_book.contacts[0].first_name == "Arya"
     assert new_book.contacts[0].email == "arya@mail.com"
+
+@pytest.mark.usecase15
+def test_json_export_and_import(tmp_path):
+    book = AddressBook()
+    contact = Contact("Kunal", "Verma", "5th Avenue", "Lucknow", "UP", "226001", "+91 9998887776", "kunal@mail.com")
+    book.add_contact(contact)
+
+    json_file = tmp_path / "contacts.json"
+    book.export_to_json(json_file)
+
+    # Load into another book
+    new_book = AddressBook()
+    new_book.import_from_json(json_file)
+
+    assert len(new_book.contacts) == 1
+    assert new_book.contacts[0].first_name == "Kunal"
+    assert new_book.contacts[0].city == "Lucknow"
