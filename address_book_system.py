@@ -14,8 +14,3 @@ class Contact:
                 f"Address    : {self.address}, {self.city}, {self.state} - {self.zip_code}\n"
                 f"Phone      : {self.phone_number}\n"
                 f"Email      : {self.email}")
-
-
-class AddressBookMain:
-    def __init__(self):
-        print("Welcome to Address Book Program")
