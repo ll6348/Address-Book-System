@@ -95,3 +95,23 @@ def test_prevent_duplicate_contact():
     assert added1 is True
     assert added2 is False  # duplicate name
     assert len(ab.contacts) == 1
+
+@pytest.mark.usecase8
+def test_search_by_city_and_state():
+    system = AddressBookSystem()
+    system.add_address_book("Friends")
+    system.add_address_book("Work")
+
+    friends = system.get_address_book("Friends")
+    work = system.get_address_book("Work")
+
+    friends.add_contact(Contact("Amit", "Shah", "123 Street", "Delhi", "Delhi", "110001", "+91 9999999999", "amit@example.com"))
+    work.add_contact(Contact("Priya", "Singh", "456 Lane", "Delhi", "Haryana", "122001", "+91 8888888888", "priya@example.com"))
+
+    city_results = system.search_by_city("Delhi")
+    state_results = system.search_by_state("Haryana")
+
+    assert len(city_results) == 2
+    assert len(state_results) == 1
+    assert city_results[0][0] == "Friends"
+    assert state_results[0][0] == "Work"
