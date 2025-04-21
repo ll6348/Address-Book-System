@@ -163,3 +163,20 @@ def test_count_contacts_by_city_and_state():
     assert state_counts["Delhi"] == 1
     assert state_counts["UP"] == 1
     assert state_counts["MH"] == 1
+
+@pytest.mark.usecase11
+def test_sort_contacts_by_name():
+    ab = AddressBook()
+
+    c1 = Contact("Zara", "Ali", "Addr1", "City", "State", "123456", "+91 900001", "zara@mail.com")
+    c2 = Contact("Amit", "Bose", "Addr2", "City", "State", "654321", "+91 900002", "amit@mail.com")
+    c3 = Contact("Amit", "Aaron", "Addr3", "City", "State", "111111", "+91 900003", "aaron@mail.com")
+
+    ab.add_contact(c1)
+    ab.add_contact(c2)
+    ab.add_contact(c3)
+
+    sorted_list = ab.get_sorted_contacts()
+    names = [(c.first_name, c.last_name) for c in sorted_list]
+
+    assert names == [("Amit", "Aaron"), ("Amit", "Bose"), ("Zara", "Ali")]
