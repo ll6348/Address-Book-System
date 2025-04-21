@@ -180,7 +180,7 @@ if __name__ == "__main__":
             if not city_counts:
                 print("No contacts available.")
             else:
-                print("\n👥 Contact Count by City:")
+                print("\nContact Count by City:")
                 for city, count in city_counts.items():
                     print(f"{city}: {count} contact(s)")
 
@@ -189,7 +189,7 @@ if __name__ == "__main__":
             if not state_counts:
                 print("No contacts available.")
             else:
-                print("\n👥 Contact Count by State:")
+                print("\nContact Count by State:")
                 for state, count in state_counts.items():
                     print(f"{state}: {count} contact(s)")
 
