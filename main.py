@@ -73,7 +73,8 @@ if __name__ == "__main__":
                 print("2. Edit Contact by Name")
                 print("3. Delete Contact by Name")
                 print("4. List Contacts")
-                print("5. Back to Main Menu")
+                print("5. Sort Contacts by Name")
+                print("6. Back to Main Menu")
 
                 sub_choice = input("Choose an option: ").strip()
 
@@ -120,6 +121,15 @@ if __name__ == "__main__":
                         print("No contacts found.")
 
                 elif sub_choice == "5":
+                    sorted_contacts = book.get_sorted_contacts()
+                    if not sorted_contacts:
+                        print("No contacts to display.")
+                    else:
+                        print("\nSorted Contacts:")
+                        for contact in sorted_contacts:
+                            print("\n" + str(contact))                        
+
+                elif sub_choice == "6":
                     break
 
                 else:

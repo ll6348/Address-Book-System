@@ -120,6 +120,9 @@ class AddressBook:
             if contact.first_name.lower() == first_name.lower() and contact.last_name.lower() == last_name.lower():
                 return self.contacts.pop(i)
         return None
+    
+    def get_sorted_contacts(self):
+        return sorted(self.contacts, key=lambda c: (c.first_name.lower(), c.last_name.lower()))
 
 
 class AddressBookSystem:
