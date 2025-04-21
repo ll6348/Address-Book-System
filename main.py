@@ -37,9 +37,14 @@ if __name__ == "__main__":
         choice = input("Choose an option: ").strip()
 
         if choice == "1":
-            contact = get_contact_from_console()
-            book.add_contact(contact)
-            print("Contact added.")
+            while True:
+                contact = get_contact_from_console()
+                book.add_contact(contact)
+                print("Contact added.")
+
+                cont = input("Do you want to add another contact? (y/n): ").strip().lower()
+                if cont != 'y':
+                    break
 
         elif choice == "2":
             first = input("Enter First Name: ").strip()
