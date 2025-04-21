@@ -21,6 +21,7 @@ def test_edit_contact_by_name_simulation():
     c = Contact("Sneha", "Rao", "Green Lane", "City", "State", "600001", "+91 9876543210", "sneha@mail.com")
     ab.contacts.append(c)
 
+    # Simulate editing address and email
     new_address = "Red Street"
     new_email = "sneha.new@mail.com"
 
@@ -32,3 +33,23 @@ def test_edit_contact_by_name_simulation():
 
     assert c.address == "Red Street"
     assert c.email == "sneha.new@mail.com"
+
+@pytest.mark.usecase4
+def test_delete_contact_by_name():
+    ab = AddressBook()
+    contact = Contact("Aarav", "Mehta", "Street 7", "Mumbai", "Maharashtra", "400001", "+91 9876501234", "aarav@mail.com")
+    ab.contacts.append(contact)
+
+    # Simulate deletion
+    before = len(ab.contacts)
+    found = False
+    for i, c in enumerate(ab.contacts):
+        if c.first_name == "Aarav" and c.last_name == "Mehta":
+            del ab.contacts[i]
+            found = True
+            break
+
+    after = len(ab.contacts)
+
+    assert found is True
+    assert after == before - 1
