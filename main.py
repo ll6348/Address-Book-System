@@ -77,7 +77,10 @@ if __name__ == "__main__":
                 print("6. Sort Contacts by City")
                 print("7. Sort Contacts by State")
                 print("8. Sort Contacts by Zip Code")
-                print("9. Back to Main Menu")
+                print("9. Export Address Book to Text File")
+                print("10. Export Address Book to CSV")
+                print("11. Import Address Book from CSV")
+                print("12. Back to Main Menu")
                 sub_choice = input("Choose an option: ").strip()
 
                 if sub_choice == "1":
@@ -152,8 +155,16 @@ if __name__ == "__main__":
                 elif sub_choice == "9":
                     filename = input("Enter text filename to export (e.g., book.txt): ").strip()
                     book.export_to_txt(filename)
-                        
+
                 elif sub_choice == "10":
+                    filename = input("Enter CSV filename to export (e.g., book.csv): ").strip()
+                    book.export_to_csv(filename)
+
+                elif sub_choice == "11":
+                    filename = input("Enter CSV filename to import: ").strip()
+                    book.import_from_csv(filename)
+                    
+                elif sub_choice == "12":
                     break
 
                 else:
