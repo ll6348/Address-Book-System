@@ -65,6 +65,59 @@ class AddressBook:
 
     def list_contacts(self):
         return [str(c) for c in self.contacts]
+    
+    def edit_contact(self):
+        first_name = input("Enter the first name of the contact to edit: ").strip()
+        last_name = input("Enter the last name of the contact to edit: ").strip()
+
+        for contact in self.contacts:
+            if contact.first_name.lower() == first_name.lower() and contact.last_name.lower() == last_name.lower():
+                print(f"\nContact found:\n{contact}")
+
+                editable_fields = [
+                    "first_name", "last_name", "address",
+                    "city", "state", "zip_code", "phone_number", "email"
+                ]
+
+                print("\nWhich field(s) do you want to edit? (comma-separated):")
+                print(", ".join(editable_fields))
+                choices = input("Enter fields: ").strip().lower().replace(" ", "").split(",")
+
+                for field in choices:
+                    if field not in editable_fields:
+                        print(f"Ignored invalid field: {field}")
+                        continue
+
+                    new_value = input(f"Enter new value for {field.replace('_', ' ').title()}: ").strip()
+
+                    try:
+                        if field == "first_name":
+                            self.validate_first_name(new_value)
+                        elif field == "last_name":
+                            self.validate_last_name(new_value)
+                        elif field == "address":
+                            self.validate_address(new_value)
+                        elif field == "city":
+                            self.validate_city(new_value)
+                        elif field == "state":
+                            self.validate_state(new_value)
+                        elif field == "zip_code":
+                            self.validate_zip(new_value)
+                        elif field == "phone_number":
+                            self.validate_phone(new_value)
+                        elif field == "email":
+                            self.validate_email(new_value)
+
+                        setattr(contact, field, new_value)
+                        print(f"{field.replace('_', ' ').title()} updated.")
+                    except ValueError as e:
+                        print(f"Invalid input for {field}: {e}")
+
+                print("\nUpdated Contact:")
+                print(contact)
+                return
+
+        print("Contact not found.")
 
 
 class AddressBookSystem:
