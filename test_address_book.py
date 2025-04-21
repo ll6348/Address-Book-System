@@ -82,3 +82,16 @@ def test_multiple_address_books():
 
     assert len(family.contacts) == 1
     assert len(work.contacts) == 1
+
+@pytest.mark.usecase7
+def test_prevent_duplicate_contact():
+    ab = AddressBook()
+    contact1 = Contact("Ravi", "Kumar", "Apt 1", "Chennai", "TN", "600001", "+91 9876543210", "ravi@example.com")
+    contact2 = Contact("Ravi", "Kumar", "Another Addr", "City", "State", "123456", "+91 9123456789", "ravi2@example.com")
+
+    added1 = ab.add_contact(contact1)
+    added2 = ab.add_contact(contact2)
+
+    assert added1 is True
+    assert added2 is False  # duplicate name
+    assert len(ab.contacts) == 1
