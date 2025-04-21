@@ -48,7 +48,9 @@ if __name__ == "__main__":
         print("5. Search by State")
         print("6. View All Persons Grouped by City")
         print("7. View All Persons Grouped by State")
-        print("8. Exit")
+        print("8. Count Contacts by City")
+        print("9. Count Contacts by State")
+        print("10. Exit")
 
         main_choice = input("Choose an option: ").strip()
 
@@ -174,9 +176,26 @@ if __name__ == "__main__":
                         print(f"[Book: {book_name}] {contact}")
 
         elif main_choice == "8":
+            city_counts = system.count_by_city()
+            if not city_counts:
+                print("No contacts available.")
+            else:
+                print("\n👥 Contact Count by City:")
+                for city, count in city_counts.items():
+                    print(f"{city}: {count} contact(s)")
+
+        elif main_choice == "9":
+            state_counts = system.count_by_state()
+            if not state_counts:
+                print("No contacts available.")
+            else:
+                print("\n👥 Contact Count by State:")
+                for state, count in state_counts.items():
+                    print(f"{state}: {count} contact(s)")
+
+        elif main_choice == "10":
             print("Exiting Address Book Program.")
             break
-
-
+        
         else:
             print("Invalid option. Try again.")

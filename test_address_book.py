@@ -142,3 +142,24 @@ def test_grouped_view_by_city_and_state():
     assert len(state_groups["Delhi"]) == 1
     assert len(state_groups["UP"]) == 1
 
+@pytest.mark.usecase10
+def test_count_contacts_by_city_and_state():
+    system = AddressBookSystem()
+    system.add_address_book("A")
+    system.add_address_book("B")
+
+    a = system.get_address_book("A")
+    b = system.get_address_book("B")
+
+    a.add_contact(Contact("Anil", "Kumar", "Addr1", "Delhi", "Delhi", "123456", "+91 900001", "anil@mail.com"))
+    b.add_contact(Contact("Sunita", "Mehra", "Addr2", "Delhi", "UP", "654321", "+91 900002", "sunita@mail.com"))
+    b.add_contact(Contact("Ravi", "Sharma", "Addr3", "Mumbai", "MH", "400001", "+91 900003", "ravi@mail.com"))
+
+    city_counts = system.count_by_city()
+    state_counts = system.count_by_state()
+
+    assert city_counts["Delhi"] == 2
+    assert city_counts["Mumbai"] == 1
+    assert state_counts["Delhi"] == 1
+    assert state_counts["UP"] == 1
+    assert state_counts["MH"] == 1

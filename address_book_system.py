@@ -163,7 +163,20 @@ class AddressBookSystem:
             for contact in book.contacts:
                 state_dict[contact.state].append((book_name, contact))
         return state_dict
+    
+    def count_by_city(self):
+        city_counts = defaultdict(int)
+        for book in self.books.values():
+            for contact in book.contacts:
+                city_counts[contact.city] += 1
+        return city_counts
 
+    def count_by_state(self):
+        state_counts = defaultdict(int)
+        for book in self.books.values():
+            for contact in book.contacts:
+                state_counts[contact.state] += 1
+        return state_counts
 
 class AddressBookMain:
     def __init__(self):
