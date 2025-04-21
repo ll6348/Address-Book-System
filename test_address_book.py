@@ -180,3 +180,34 @@ def test_sort_contacts_by_name():
     names = [(c.first_name, c.last_name) for c in sorted_list]
 
     assert names == [("Amit", "Aaron"), ("Amit", "Bose"), ("Zara", "Ali")]
+
+@pytest.mark.usecase12
+def test_sort_contacts():
+    ab = AddressBook()
+    ab.add_contact(Contact("John", "Doe", "123 Elm St", "Chicago", "Illinois", "60007", "+91 1234567890", "john.doe@example.com"))
+    ab.add_contact(Contact("Alice", "Smith", "456 Oak St", "New York", "New York", "10001", "+91 2345678901", "alice.smith@example.com"))
+    ab.add_contact(Contact("Bob", "Johnson", "789 Pine St", "Los Angeles", "California", "90001", "+91 3456789012", "bob.johnson@example.com"))
+
+    # Test sorting by name
+    sorted_by_name = ab.sort_by_name()
+    assert sorted_by_name[0].first_name == "Alice"
+    assert sorted_by_name[1].first_name == "Bob"
+    assert sorted_by_name[2].first_name == "John"
+
+    # Test sorting by city
+    sorted_by_city = ab.sort_by_city()
+    assert sorted_by_city[0].city == "Chicago"
+    assert sorted_by_city[1].city == "Los Angeles"
+    assert sorted_by_city[2].city == "New York"
+
+    # Test sorting by state
+    sorted_by_state = ab.sort_by_state()
+    assert sorted_by_state[0].state == "California"
+    assert sorted_by_state[1].state == "Illinois"
+    assert sorted_by_state[2].state == "New York"
+
+    # Test sorting by zip
+    sorted_by_zip = ab.sort_by_zip()
+    assert sorted_by_zip[0].zip_code == "10001"
+    assert sorted_by_zip[1].zip_code == "60007"
+    assert sorted_by_zip[2].zip_code == "90001"
