@@ -132,6 +132,22 @@ class AddressBookSystem:
 
     def get_address_book(self, name):
         return self.books.get(name)
+    
+    def search_by_city(self, city):
+        results = []
+        for book_name, book in self.books.items():
+            for contact in book.contacts:
+                if contact.city.lower() == city.lower():
+                    results.append((book_name, contact))
+        return results
+
+    def search_by_state(self, state):
+        results = []
+        for book_name, book in self.books.items():
+            for contact in book.contacts:
+                if contact.state.lower() == state.lower():
+                    results.append((book_name, contact))
+        return results
 
 
 class AddressBookMain:

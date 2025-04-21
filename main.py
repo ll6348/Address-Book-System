@@ -44,7 +44,9 @@ if __name__ == "__main__":
         print("1. Create New Address Book")
         print("2. Select Address Book")
         print("3. List All Address Books")
-        print("4. Exit")
+        print("4. Search by City")
+        print("5. Search by State")
+        print("6. Exit")
 
         main_choice = input("Choose an option: ").strip()
 
@@ -128,6 +130,28 @@ if __name__ == "__main__":
                     print(f"- {bname}")
 
         elif main_choice == "4":
+            city = input("Enter city name to search: ").strip()
+            results = system.search_by_city(city)
+            if results:
+                print(f"\nFound contacts in city '{city}':")
+                for book_name, contact in results:
+                    print(f"\n[Book: {book_name}]")
+                    print(contact)
+            else:
+                print("No contacts found in this city.")
+
+        elif main_choice == "5":
+            state = input("Enter state name to search: ").strip()
+            results = system.search_by_state(state)
+            if results:
+                print(f"\nFound contacts in state '{state}':")
+                for book_name, contact in results:
+                    print(f"\n[Book: {book_name}]")
+                    print(contact)
+            else:
+                print("No contacts found in this state.")
+
+        elif main_choice == "6":
             print("Exiting Address Book Program.")
             break
 
