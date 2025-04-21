@@ -1,5 +1,6 @@
 import re
 from functools import wraps
+from collections import defaultdict
 
 def regex_validator(pattern):
     def decorator(func):
@@ -148,6 +149,20 @@ class AddressBookSystem:
                 if contact.state.lower() == state.lower():
                     results.append((book_name, contact))
         return results
+    
+    def view_all_grouped_by_city(self):
+        city_dict = defaultdict(list)
+        for book_name, book in self.books.items():
+            for contact in book.contacts:
+                city_dict[contact.city].append((book_name, contact))
+        return city_dict
+
+    def view_all_grouped_by_state(self):
+        state_dict = defaultdict(list)
+        for book_name, book in self.books.items():
+            for contact in book.contacts:
+                state_dict[contact.state].append((book_name, contact))
+        return state_dict
 
 
 class AddressBookMain:
