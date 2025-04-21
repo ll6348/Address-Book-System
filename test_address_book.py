@@ -53,3 +53,17 @@ def test_delete_contact_by_name():
 
     assert found is True
     assert after == before - 1
+
+@pytest.mark.usecase5
+def test_add_multiple_contacts():
+    ab = AddressBook()
+    contacts = [
+        Contact("A", "One", "Addr1", "City1", "State1", "111111", "+91 9000000001", "a.one@mail.com"),
+        Contact("B", "Two", "Addr2", "City2", "State2", "222222", "+91 9000000002", "b.two@mail.com")
+    ]
+    for c in contacts:
+        ab.add_contact(c)
+
+    assert len(ab.contacts) == 2
+    assert ab.contacts[0].first_name == "A"
+    assert ab.contacts[1].last_name == "Two"
