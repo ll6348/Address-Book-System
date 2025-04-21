@@ -121,13 +121,30 @@ if __name__ == "__main__":
                         print("No contacts found.")
 
                 elif sub_choice == "5":
-                    sorted_contacts = book.get_sorted_contacts()
-                    if not sorted_contacts:
-                        print("No contacts to display.")
+                    print("Sort Contacts:")
+                    print("1. Sort by City")
+                    print("2. Sort by State")
+                    print("3. Sort by Zip Code")
+                    sort_choice = input("Choose sorting option: ").strip()
+
+                    if sort_choice == "1":
+                        sorted_contacts = book.sort_by_name()
+                    elif sort_choice == "2":
+                        sorted_contacts = book.sort_by_city()
+                    elif sort_choice == "3":
+                        sorted_contacts = book.sort_by_state()
+                    elif sort_choice == "4":
+                        sorted_contacts = book.sort_by_zip()
                     else:
+                        print("Invalid choice.")
+                        continue
+
+                    if sorted_contacts:
                         print("\nSorted Contacts:")
                         for contact in sorted_contacts:
-                            print("\n" + str(contact))                        
+                            print("\n" + str(contact))
+                    else:
+                        print("No contacts to display.")                        
 
                 elif sub_choice == "6":
                     break

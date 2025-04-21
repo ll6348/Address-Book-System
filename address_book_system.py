@@ -121,8 +121,17 @@ class AddressBook:
                 return self.contacts.pop(i)
         return None
     
-    def get_sorted_contacts(self):
+    def sort_by_name(self):
         return sorted(self.contacts, key=lambda c: (c.first_name.lower(), c.last_name.lower()))
+    
+    def sort_by_city(self):
+        return sorted(self.contacts, key=lambda c: c.city.lower())
+
+    def sort_by_state(self):
+        return sorted(self.contacts, key=lambda c: c.state.lower())
+
+    def sort_by_zip(self):
+        return sorted(self.contacts, key=lambda c: c.zip_code)
 
 
 class AddressBookSystem:
