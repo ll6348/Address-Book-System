@@ -196,3 +196,17 @@ def test_sort_by_city_state_zip():
     assert by_city == ["Ahmedabad", "Delhi", "Mumbai"]
     assert by_state == ["DL", "GJ", "MH"]
     assert by_zip == ["110001", "380001", "400001"]
+
+@pytest.mark.usecase13
+def test_export_to_text(tmp_path):
+    ab = AddressBook()
+    contact = Contact("Maya", "Iyer", "222 Road", "Pune", "MH", "411001", "+91 9000000009", "maya@mail.com")
+    ab.add_contact(contact)
+
+    file_path = tmp_path / "book.txt"
+    ab.export_to_txt(file_path)
+
+    content = file_path.read_text()
+    assert "Maya Iyer" in content
+    assert "222 Road" in content
+    assert "Phone" in content

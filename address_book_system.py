@@ -132,7 +132,13 @@ class AddressBook:
 
     def sort_by_zip(self):
         return sorted(self.contacts, key=lambda c: c.zip_code)
-
+    
+    def export_to_txt(self, filename):
+        with open(filename, 'w') as file:
+            for contact in self.contacts:
+                file.write(str(contact))
+                file.write("\n" + "-" * 40 + "\n")
+        print(f"Address book exported to plain text file: {filename}")
 
 class AddressBookSystem:
     def __init__(self):
